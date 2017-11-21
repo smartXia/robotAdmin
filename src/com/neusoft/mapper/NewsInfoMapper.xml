@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.mapper.NewsInfoMapper">
+	<resultMap id="BaseResultMap" type="com.neusoft.po.NewsInfo">
+		<id column="news_id" property="newsId" jdbcType="INTEGER" />
+		<result column="news_title" property="newsTitle" jdbcType="VARCHAR" />
+		<result column="news_context" property="newsContext" jdbcType="VARCHAR" />
+		<result column="news_author" property="newsAuthor" jdbcType="INTEGER" />
+		<result column="news_type" property="newsType" jdbcType="INTEGER" />
+		<result column="news_date" property="newsDate" jdbcType="TIMESTAMP" />
+		<result column="news_images" property="newsImages" jdbcType="VARCHAR" />
+		<result column="news_read" property="newsRead" jdbcType="INTEGER" />
+		<result column="news_commit" property="newsCommit" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		news_id, news_title, news_context, news_author, news_type,
+		news_date,
+		news_images,
+		news_read, news_commit
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.neusoft.po.NewsInfoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from news_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null and pageSize !=null and pageSize !=0">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from news_info
+		where news_id = #{newsId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		news_info
+		where news_id = #{newsId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.neusoft.po.NewsInfoExample">
+		delete from news_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.neusoft.po.NewsInfo">
+		insert into news_info
+		(news_id, news_title, news_context,
+		news_author, news_type, news_date,
+		news_images, news_read, news_commit
+		)
+		values
+		(#{newsId,jdbcType=INTEGER}, #{newsTitle,jdbcType=VARCHAR},
+		#{newsContext,jdbcType=VARCHAR},
+		#{newsAuthor,jdbcType=INTEGER},
+		#{newsType,jdbcType=INTEGER}, #{newsDate,jdbcType=TIMESTAMP},
+		#{newsImages,jdbcType=VARCHAR}, #{newsRead,jdbcType=INTEGER},
+		#{newsCommit,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.neusoft.po.NewsInfo">
+		insert into news_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="newsId != null">
+				news_id,
+			</if>
+			<if test="newsTitle != null">
+				news_title,
+			</if>
+			<if test="newsContext != null">
+				news_context,
+			</if>
+			<if test="newsAuthor != null">
+				news_author,
+			</if>
+			<if test="newsType != null">
+				news_type,
+			</if>
+			<if test="newsDate != null">
+				news_date,
+			</if>
+			<if test="newsImages != null">
+				news_images,
+			</if>
+			<if test="newsRead != null">
+				news_read,
+			</if>
+			<if test="newsCommit != null">
+				news_commit,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="newsId != null">
+				#{newsId,jdbcType=INTEGER},
+			</if>
+			<if test="newsTitle != null">
+				#{newsTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="newsContext != null">
+				#{newsContext,jdbcType=VARCHAR},
+			</if>
+			<if test="newsAuthor != null">
+				#{newsAuthor,jdbcType=INTEGER},
+			</if>
+			<if test="newsType != null">
+				#{newsType,jdbcType=INTEGER},
+			</if>
+			<if test="newsDate != null">
+				#{newsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="newsImages != null">
+				#{newsImages,jdbcType=VARCHAR},
+			</if>
+			<if test="newsRead != null">
+				#{newsRead,jdbcType=INTEGER},
+			</if>
+			<if test="newsCommit != null">
+				#{newsCommit,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.neusoft.po.NewsInfoExample"
+		resultType="java.lang.Integer">
+		select count(*) from news_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update news_info
+		<set>
+			<if test="record.newsId != null">
+				news_id = #{record.newsId,jdbcType=INTEGER},
+			</if>
+			<if test="record.newsTitle != null">
+				news_title = #{record.newsTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.newsContext != null">
+				news_context = #{record.newsContext,jdbcType=VARCHAR},
+			</if>
+			<if test="record.newsAuthor != null">
+				news_author = #{record.newsAuthor,jdbcType=INTEGER},
+			</if>
+			<if test="record.newsType != null">
+				news_type = #{record.newsType,jdbcType=INTEGER},
+			</if>
+			<if test="record.newsDate != null">
+				news_date = #{record.newsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.newsImages != null">
+				news_images = #{record.newsImages,jdbcType=VARCHAR},
+			</if>
+			<if test="record.newsRead != null">
+				news_read = #{record.newsRead,jdbcType=INTEGER},
+			</if>
+			<if test="record.newsCommit != null">
+				news_commit = #{record.newsCommit,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update news_info
+		set news_id = #{record.newsId,jdbcType=INTEGER},
+		news_title = #{record.newsTitle,jdbcType=VARCHAR},
+		news_context =
+		#{record.newsContext,jdbcType=VARCHAR},
+		news_author =
+		#{record.newsAuthor,jdbcType=INTEGER},
+		news_type =
+		#{record.newsType,jdbcType=INTEGER},
+		news_date =
+		#{record.newsDate,jdbcType=TIMESTAMP},
+		news_images =
+		#{record.newsImages,jdbcType=VARCHAR},
+		news_read =
+		#{record.newsRead,jdbcType=INTEGER},
+		news_commit =
+		#{record.newsCommit,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.neusoft.po.NewsInfo">
+		update news_info
+		<set>
+			<if test="newsTitle != null">
+				news_title = #{newsTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="newsContext != null">
+				news_context = #{newsContext,jdbcType=VARCHAR},
+			</if>
+			<if test="newsAuthor != null">
+				news_author = #{newsAuthor,jdbcType=INTEGER},
+			</if>
+			<if test="newsType != null">
+				news_type = #{newsType,jdbcType=INTEGER},
+			</if>
+			<if test="newsDate != null">
+				news_date = #{newsDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="newsImages != null">
+				news_images = #{newsImages,jdbcType=VARCHAR},
+			</if>
+			<if test="newsRead != null">
+				news_read = #{newsRead,jdbcType=INTEGER},
+			</if>
+			<if test="newsCommit != null">
+				news_commit = #{newsCommit,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where news_id = #{newsId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.neusoft.po.NewsInfo">
+		update news_info
+		set news_title = #{newsTitle,jdbcType=VARCHAR},
+		news_context =
+		#{newsContext,jdbcType=VARCHAR},
+		news_author =
+		#{newsAuthor,jdbcType=INTEGER},
+		news_type =
+		#{newsType,jdbcType=INTEGER},
+		news_date =
+		#{newsDate,jdbcType=TIMESTAMP},
+		news_images =
+		#{newsImages,jdbcType=VARCHAR},
+		news_read =
+		#{newsRead,jdbcType=INTEGER},
+		news_commit =
+		#{newsCommit,jdbcType=VARCHAR}
+		where news_id =
+		#{newsId,jdbcType=INTEGER}
+	</update>
+
+	<resultMap type="com.neusoft.po.NewsInfo" id="newsResultMap">
+		<id column="news_id" property="newsId" jdbcType="INTEGER" />
+		<result column="news_title" property="newsTitle" jdbcType="VARCHAR" />
+		<result column="news_context" property="newsContext" jdbcType="VARCHAR" />
+		<result column="news_date" property="newsDate" jdbcType="DATE" />
+		<result column="news_images" property="newsImages" jdbcType="VARCHAR" />
+		<result column="news_read" property="newsRead" jdbcType="INTEGER" />
+		<result column="news_commit" property="newsCommit" jdbcType="VARCHAR" />
+		<!--表示进行关联查询单条记录 property：表示关联查询的结果存储在类中的属性中，javaType：表示关联查询的结果类型 -->
+		<association property="author" javaType="com.neusoft.po.NewsAuthor">
+			<id column="author_id" property="authorId" jdbcType="INTEGER" />
+			<result column="author_id" property="authorId" jdbcType="INTEGER" />
+			<result column="author_name" property="authorName" jdbcType="VARCHAR" />
+		</association>
+		<association property="type" javaType="com.neusoft.po.NewsType">
+			<id column="type_id" property="typeId" jdbcType="INTEGER" />
+			<result column="type_id" property="typeId" jdbcType="INTEGER" />
+			<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<select id="showNewsinfodetailList" resultMap="newsResultMap">
+		select
+		i.news_images,i.news_read,
+		i.news_id,i.news_title,i.news_context,i.news_date,
+		a.author_name,t.type_name
+		from news_author
+		a,news_type t,news_info i
+		where a.author_id = i.news_author
+		and
+		t.type_id = i.news_type
+	</select>
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.mapper.UsersMapper">
+	<resultMap id="BaseResultMap" type="com.neusoft.po.Users">
+		<id column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+		<result column="user_image" property="userImage" jdbcType="VARCHAR" />
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+		<result column="user_money" property="userMoney" jdbcType="VARCHAR" />
+		<result column="user_sex" property="userSex" jdbcType="VARCHAR" />
+		<result column="user_birth" property="userBirth" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		user_id, user_name, user_pwd, user_image, user_email,
+		user_address,
+		user_phone, user_money,
+		user_sex, user_birth
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.neusoft.po.UsersExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from users
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null and pageSize !=null and pageSize !=0">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from users
+		where user_id = #{userId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.neusoft.po.UsersExample">
+		delete from users
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.neusoft.po.Users">
+		insert into users (user_id,
+		user_name, user_pwd,
+		user_image, user_email, user_address,
+		user_phone,
+		user_money, user_sex,
+		user_birth)
+		values (#{userId,jdbcType=INTEGER},
+		#{userName,jdbcType=VARCHAR},
+		#{userPwd,jdbcType=VARCHAR},
+		#{userImage,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+		#{userAddress,jdbcType=VARCHAR},
+		#{userPhone,jdbcType=VARCHAR},
+		#{userMoney,jdbcType=VARCHAR},
+		#{userSex,jdbcType=VARCHAR},
+		#{userBirth,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.neusoft.po.Users">
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="userPwd != null">
+				user_pwd,
+			</if>
+			<if test="userImage != null">
+				user_image,
+			</if>
+			<if test="userEmail != null">
+				user_email,
+			</if>
+			<if test="userAddress != null">
+				user_address,
+			</if>
+			<if test="userPhone != null">
+				user_phone,
+			</if>
+			<if test="userMoney != null">
+				user_money,
+			</if>
+			<if test="userSex != null">
+				user_sex,
+			</if>
+			<if test="userBirth != null">
+				user_birth,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				#{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userImage != null">
+				#{userImage,jdbcType=VARCHAR},
+			</if>
+			<if test="userEmail != null">
+				#{userEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="userAddress != null">
+				#{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				#{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="userMoney != null">
+				#{userMoney,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=VARCHAR},
+			</if>
+			<if test="userBirth != null">
+				#{userBirth,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.neusoft.po.UsersExample"
+		resultType="java.lang.Integer">
+		select count(*) from users
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update users
+		<set>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userName != null">
+				user_name = #{record.userName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPwd != null">
+				user_pwd = #{record.userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userImage != null">
+				user_image = #{record.userImage,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userEmail != null">
+				user_email = #{record.userEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userAddress != null">
+				user_address = #{record.userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPhone != null">
+				user_phone = #{record.userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userMoney != null">
+				user_money = #{record.userMoney,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userSex != null">
+				user_sex = #{record.userSex,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userBirth != null">
+				user_birth = #{record.userBirth,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update users
+		set user_id = #{record.userId,jdbcType=INTEGER},
+		user_name
+		= #{record.userName,jdbcType=VARCHAR},
+		user_pwd =
+		#{record.userPwd,jdbcType=VARCHAR},
+		user_image =
+		#{record.userImage,jdbcType=VARCHAR},
+		user_email =
+		#{record.userEmail,jdbcType=VARCHAR},
+		user_address =
+		#{record.userAddress,jdbcType=VARCHAR},
+		user_phone =
+		#{record.userPhone,jdbcType=VARCHAR},
+		user_money =
+		#{record.userMoney,jdbcType=VARCHAR},
+		user_sex =
+		#{record.userSex,jdbcType=VARCHAR},
+		user_birth =
+		#{record.userBirth,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.neusoft.po.Users">
+		update users
+		<set>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				user_pwd = #{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userImage != null">
+				user_image = #{userImage,jdbcType=VARCHAR},
+			</if>
+			<if test="userEmail != null">
+				user_email = #{userEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="userAddress != null">
+				user_address = #{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				user_phone = #{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="userMoney != null">
+				user_money = #{userMoney,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				user_sex = #{userSex,jdbcType=VARCHAR},
+			</if>
+			<if test="userBirth != null">
+				user_birth = #{userBirth,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.neusoft.po.Users">
+		update users
+		set
+		user_name = #{userName,jdbcType=VARCHAR},
+		user_pwd =
+		#{userPwd,jdbcType=VARCHAR},
+		user_image =
+		#{userImage,jdbcType=VARCHAR},
+		user_email =
+		#{userEmail,jdbcType=VARCHAR},
+		user_address =
+		#{userAddress,jdbcType=VARCHAR},
+		user_phone =
+		#{userPhone,jdbcType=VARCHAR},
+		user_money =
+		#{userMoney,jdbcType=VARCHAR},
+		user_sex = #{userSex,jdbcType=VARCHAR},
+		user_birth = #{userBirth,jdbcType=VARCHAR}
+		where user_id =
+		#{userId,jdbcType=INTEGER}
+	</update>
+</mapper>

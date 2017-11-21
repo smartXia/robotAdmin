@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.mapper.CommitTopicMapper">
+	<resultMap id="BaseResultMap" type="com.neusoft.po.CommitTopic">
+		<id column="commit_id" property="commitId" jdbcType="INTEGER" />
+		<result column="commit_topic" property="commitTopic" jdbcType="INTEGER" />
+		<result column="commit_user" property="commitUser" jdbcType="VARCHAR" />
+		<result column="commit_time" property="commitTime" jdbcType="TIMESTAMP" />
+		<result column="commit_context" property="commitContext"
+			jdbcType="VARCHAR" />
+		<result column="commit_love" property="commitLove" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		commit_id, commit_topic, commit_user, commit_time, commit_context, commit_love
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.neusoft.po.CommitTopicExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from commit_topic
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null and pageSize !=null and pageSize !=0">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from commit_topic
+		where commit_id = #{commitId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from commit_topic
+		where commit_id = #{commitId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.neusoft.po.CommitTopicExample">
+		delete from commit_topic
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.neusoft.po.CommitTopic">
+		insert into commit_topic (commit_id, commit_topic, commit_user,
+		commit_time, commit_context, commit_love
+		)
+		values (#{commitId,jdbcType=INTEGER}, #{commitTopic,jdbcType=INTEGER},
+		#{commitUser,jdbcType=VARCHAR},
+		#{commitTime,jdbcType=TIMESTAMP}, #{commitContext,jdbcType=VARCHAR}, #{commitLove,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.neusoft.po.CommitTopic">
+		insert into commit_topic
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commitId != null">
+				commit_id,
+			</if>
+			<if test="commitTopic != null">
+				commit_topic,
+			</if>
+			<if test="commitUser != null">
+				commit_user,
+			</if>
+			<if test="commitTime != null">
+				commit_time,
+			</if>
+			<if test="commitContext != null">
+				commit_context,
+			</if>
+			<if test="commitLove != null">
+				commit_love,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commitId != null">
+				#{commitId,jdbcType=INTEGER},
+			</if>
+			<if test="commitTopic != null">
+				#{commitTopic,jdbcType=INTEGER},
+			</if>
+			<if test="commitUser != null">
+				#{commitUser,jdbcType=VARCHAR},
+			</if>
+			<if test="commitTime != null">
+				#{commitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commitContext != null">
+				#{commitContext,jdbcType=VARCHAR},
+			</if>
+			<if test="commitLove != null">
+				#{commitLove,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.neusoft.po.CommitTopicExample"
+		resultType="java.lang.Integer">
+		select count(*) from commit_topic
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update commit_topic
+		<set>
+			<if test="record.commitId != null">
+				commit_id = #{record.commitId,jdbcType=INTEGER},
+			</if>
+			<if test="record.commitTopic != null">
+				commit_topic = #{record.commitTopic,jdbcType=INTEGER},
+			</if>
+			<if test="record.commitUser != null">
+				commit_user = #{record.commitUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commitTime != null">
+				commit_time = #{record.commitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.commitContext != null">
+				commit_context = #{record.commitContext,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commitLove != null">
+				commit_love = #{record.commitLove,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update commit_topic
+		set commit_id = #{record.commitId,jdbcType=INTEGER},
+		commit_topic = #{record.commitTopic,jdbcType=INTEGER},
+		commit_user = #{record.commitUser,jdbcType=VARCHAR},
+		commit_time = #{record.commitTime,jdbcType=TIMESTAMP},
+		commit_context = #{record.commitContext,jdbcType=VARCHAR},
+		commit_love = #{record.commitLove,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.neusoft.po.CommitTopic">
+		update commit_topic
+		<set>
+			<if test="commitTopic != null">
+				commit_topic = #{commitTopic,jdbcType=INTEGER},
+			</if>
+			<if test="commitUser != null">
+				commit_user = #{commitUser,jdbcType=VARCHAR},
+			</if>
+			<if test="commitTime != null">
+				commit_time = #{commitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commitContext != null">
+				commit_context = #{commitContext,jdbcType=VARCHAR},
+			</if>
+			<if test="commitLove != null">
+				commit_love = #{commitLove,jdbcType=INTEGER},
+			</if>
+		</set>
+		where commit_id = #{commitId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.neusoft.po.CommitTopic">
+		update commit_topic
+		set commit_topic = #{commitTopic,jdbcType=INTEGER},
+		commit_user = #{commitUser,jdbcType=VARCHAR},
+		commit_time = #{commitTime,jdbcType=TIMESTAMP},
+		commit_context = #{commitContext,jdbcType=VARCHAR},
+		commit_love = #{commitLove,jdbcType=INTEGER}
+		where commit_id = #{commitId,jdbcType=INTEGER}
+	</update>
+</mapper>

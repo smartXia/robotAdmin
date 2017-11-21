@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.po.Orders" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="robot_image" property="robotImage" jdbcType="VARCHAR" />
+    <result column="robot_price" property="robotPrice" jdbcType="INTEGER" />
+    <result column="robot_name" property="robotName" jdbcType="VARCHAR" />
+    <result column="robot_com" property="robotCom" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="order_state" property="orderState" jdbcType="VARCHAR" />
+    <result column="water" property="water" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, number, user_name, robot_image, robot_price, robot_name, robot_com, create_time, 
+    note, order_state, water
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neusoft.po.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.neusoft.po.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.po.Orders" >
+    insert into orders (order_id, number, user_name, 
+      robot_image, robot_price, robot_name, 
+      robot_com, create_time, note, 
+      order_state, water)
+    values (#{orderId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{robotImage,jdbcType=VARCHAR}, #{robotPrice,jdbcType=INTEGER}, #{robotName,jdbcType=VARCHAR}, 
+      #{robotCom,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=VARCHAR}, #{water,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.po.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="robotImage != null" >
+        robot_image,
+      </if>
+      <if test="robotPrice != null" >
+        robot_price,
+      </if>
+      <if test="robotName != null" >
+        robot_name,
+      </if>
+      <if test="robotCom != null" >
+        robot_com,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="water != null" >
+        water,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotImage != null" >
+        #{robotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="robotPrice != null" >
+        #{robotPrice,jdbcType=INTEGER},
+      </if>
+      <if test="robotName != null" >
+        #{robotName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCom != null" >
+        #{robotCom,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="water != null" >
+        #{water,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.neusoft.po.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.robotImage != null" >
+        robot_image = #{record.robotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.robotPrice != null" >
+        robot_price = #{record.robotPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.robotName != null" >
+        robot_name = #{record.robotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.robotCom != null" >
+        robot_com = #{record.robotCom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderState != null" >
+        order_state = #{record.orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.water != null" >
+        water = #{record.water,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      number = #{record.number,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      robot_image = #{record.robotImage,jdbcType=VARCHAR},
+      robot_price = #{record.robotPrice,jdbcType=INTEGER},
+      robot_name = #{record.robotName,jdbcType=VARCHAR},
+      robot_com = #{record.robotCom,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      note = #{record.note,jdbcType=VARCHAR},
+      order_state = #{record.orderState,jdbcType=VARCHAR},
+      water = #{record.water,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.po.Orders" >
+    update orders
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotImage != null" >
+        robot_image = #{robotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="robotPrice != null" >
+        robot_price = #{robotPrice,jdbcType=INTEGER},
+      </if>
+      <if test="robotName != null" >
+        robot_name = #{robotName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCom != null" >
+        robot_com = #{robotCom,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="water != null" >
+        water = #{water,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.po.Orders" >
+    update orders
+    set number = #{number,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      robot_image = #{robotImage,jdbcType=VARCHAR},
+      robot_price = #{robotPrice,jdbcType=INTEGER},
+      robot_name = #{robotName,jdbcType=VARCHAR},
+      robot_com = #{robotCom,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=VARCHAR},
+      water = #{water,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
